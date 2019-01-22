@@ -1,0 +1,156 @@
+<html>
+  <head>
+    <!--<meta charset="utf-8">-->
+    <title>jQuery Mobile Web App</title>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  </head>
+  <body>
+
+  <div id="page1" data-role="page">
+    <div data-role="header"> <h1>Display message system</h1> </div>
+      <div data-role="content">
+        <ul id="allList"></ul>
+
+        <p>Enter the id:</p>
+
+        <input id="kengdie" type="text" placeholder="your id here"></input>
+
+        <p>Enter the Text you want to post:</p>
+
+        <input id="shabi" type="text" placeholder="your text here"></input>
+
+        <button onclick="submit()">See all Messages</button>
+      </div>
+
+    <div data-role="content">
+      <ul id="myList">
+      </ul>
+
+      <p>Enter the id to retrieve it's newest message:</p>
+
+      <input id="buzhidao" type="text" placeholder="your id here"></input>
+
+      <button onclick="submitId()">See newest message of this id</button>
+    </div>
+
+    <div data-role="content">
+      <ul id="newList">
+      </ul>
+
+      <p>Enter the id to retrieve it's message:</p>
+
+      <input id="zhidao" type="text" placeholder="your id here"></input>
+
+      <button onclick="submitNewId()">See all messages of this id</button>
+    </div>
+
+    <div data-role="footer"> <h1>Display message system</h1> </div>
+  </div>
+
+  <script>
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", "./message", false);
+      xmlHttp.send(null);
+
+      var list = JSON.parse(xmlHttp.responseText);
+
+      var ul = document.getElementById("allList");
+
+      for(var i = 0; i < list.length-1; i++){
+          var li = document.createElement("li");
+          li.innerText = list[i];
+          ul.appendChild(li);
+      }
+
+      function submit() {
+          var textBox = document.getElementById("shabi");
+          var IDBox = document.getElementById("kengdie");
+
+          var content = textBox.value;
+          var userID = IDBox.value;
+
+          xmlHttp.open("POST", "./message?message=" + content + "&userid=" + userID, false);
+          xmlHttp.send(null);
+
+          location.reload();
+      }
+
+      function submitId() {
+          var xmlHttp2 = new XMLHttpRequest();
+          var IDBox2 = document.getElementById("buzhidao");
+
+          var userID2 = IDBox2.value;
+
+          xmlHttp2.open("PUT", "./message?useridgiven=" + userID2, false);
+          xmlHttp2.send(null);
+
+          console.log(xmlHttp2.responseText);
+          var prevList = JSON.parse(window.sessionStorage.getItem("holyList"));
+          window.sessionStorage.setItem("holyList", xmlHttp2.responseText);
+          var list = JSON.parse(window.sessionStorage.getItem("holyList"));
+          if(prevList && prevList[0] === list[0]) list = list.slice(prevList.length);
+          console.log(list)
+//          var list = JSON.parse(xmlHttp2.responseText);
+//          window.sessionStorage.setItem("list", JSON.stringify(list));
+//          console.log(list)
+//          console.log(window.sessionStorage.getItem("list"))
+
+          var ul = document.getElementById("myList");
+
+          ul.innerHTML = "";
+
+          for(var i = 0; i < list.length; i++){
+              var li = document.createElement("li");
+              if(i % 2 === 0){
+                  li.innerText = list[i];
+                  console.log(li);
+                  ul.appendChild(li);
+              }
+          }
+      }
+
+      function submitNewId() {
+          var xmlHttp3 = new XMLHttpRequest();
+          var IDBox3 = document.getElementById("zhidao");
+
+          var userID3 = IDBox3.value;
+
+          xmlHttp3.open("PUT", "./message?useridgiven=" + userID3, false);
+          xmlHttp3.send(null);
+
+          console.log(xmlHttp3.responseText);
+          var list = JSON.parse(xmlHttp3.responseText);
+          console.log(list)
+//          var list = JSON.parse(xmlHttp2.responseText);
+//          window.sessionStorage.setItem("list", JSON.stringify(list));
+//          console.log(list)
+//          console.log(window.sessionStorage.getItem("list"))
+
+          var ul = document.getElementById("newList");
+
+          ul.innerHTML = "";
+
+          for(var i = 0; i < list.length; i++){
+              var li = document.createElement("li");
+              if(i % 2 === 0){
+                  li.innerText = list[i];
+                  console.log(li);
+                  ul.appendChild(li);
+              }
+          }
+      }
+  </script>
+
+  </body>
+
+</html>

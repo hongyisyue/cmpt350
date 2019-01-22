@@ -1,0 +1,40 @@
+allow for server side scripting
+	<%= … %>	evaluates the expression & prints it into the output stream
+	<% %>		execute code
+
+
+e.g.
+	<%= ''+1+1 %> <br>
+	<% System.out.println("Hello, World") %>
+
+
+Feb. 7th
+
+Node.js
+
+HTTP server: (server.js)
+
+var http = require("http")
+var url = require("url")
+
+
+start(route){
+function onRequest(request, response){
+	var pathname = url.pares(request.url).pathname;
+	console.log("Request for" + pathname + "received");
+
+	route(pathname);
+	
+	response.writeHead(… …);
+	response.write("HelloWorld");
+	response.end();
+ }
+}
+
+…
+
+
+http.createServer(onRequest).listen(8888)
+
+
+JQury ThemeRoller

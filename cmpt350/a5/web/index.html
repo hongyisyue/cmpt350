@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Include meta tag to ensure proper rendering and touch zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include jQuery Mobile stylesheets -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <!-- Include the jQuery library -->
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- Include the jQuery Mobile library -->
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<body>
+
+<div align="center" vertical-align="middle" background = "blue" width="100" length="100">
+    <form name="loginForm" method="post" action="/SQLServlet">
+        new message: <input name="message" type="text" value ="message here"/> <br/>
+        user id: <input name="userId" type="number"/> <br/>
+        <input type="submit" value="Postmessage" />
+    </form>
+</div>
+
+<br><br><br>
+
+<div align="center" vertical-align="middle" background = "blue" width="100" length="100">
+    <form method="get" action="/SQLServlet">
+        <ol data-role="listview">opition(0-all message, 1-message with id, 2-message without the id)
+            <!--     <li>0 for print all message</li>
+                <li>1 for print message`s userId is typed in next input field</li>
+                <li>2 for print message`s userId is not typed in next input field</li>-->
+        </ol>
+        <input type="number" name="option" width="1" height="1" value="id here">
+        <br/>
+        <p>id you want to retrieve</p>
+        <input type="text" name="idList" width="10" height="10" value = "a number">
+        <br/>
+        <input type="submit" value="Submit Number" />
+    </form>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Include meta tag to ensure proper rendering and touch zooming -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Include jQuery Mobile stylesheets -->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <!-- Include the jQuery library -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <!-- Include the jQuery Mobile library -->
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    </head>
+    <body>
+        <p id="message"></p>
+        <script>
+             var string = document.URL.substr(39,document.URL.length-1)
+             console.log(string)
+             var data = string.substr(1,string.length-1)
+             console.log(data)
+             var data2 = data.split(",%20")
+             console.log(data2)
+             var modifiedString = ""
+             data2.forEach(function(d){
+                 modifiedString+=d
+                 modifiedString+="\n"
+             })
+             var data3 = modifiedString.split("%20")
+             var newString = ""
+             data3.forEach(function(d){
+                 newString+=d
+                 newString+=" "
+             })
+             
+             document.getElementById("message").innerText = newString
+        </script>
+        <a href="./index.html" target="_top">go back</a>
+    </body>
+</html>
